@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pulse_cab/core/constants/app_texts.dart';
+import 'package:pulse_cab/core/model/booking_request.dart';
 import 'package:pulse_cab/core/utils/responsive.dart';
 import 'package:pulse_cab/features/cars/explore_cars_screen.dart';
 import 'package:pulse_cab/features/home/sections/hero_section/widgets/city_input.dart';
+import 'package:pulse_cab/features/home/sections/hero_section/widgets/mobile_number_field.dart';
 
 import '../../../widgets/input_field.dart';
 import 'swap_button.dart';
@@ -74,6 +76,15 @@ class _BookingCardState extends State<BookingCard> {
     return valid;
   }
 
+  BookingRequest _buildRequest() {
+    return BookingRequest(
+      from: fromController.text.trim(),
+      to: toController.text.trim(),
+      mobile: mobileController.text.trim(),
+      isFixTrip: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
@@ -104,14 +115,11 @@ class _BookingCardState extends State<BookingCard> {
             height: 48,
             child: ElevatedButton(
               onPressed: () {
-                final ok = _validateForm();
-                _navigate(
-                  context,
-                  const ExploreCarsScreen(
-                    route: 'Ahmedabad → Rajkot',
-                    isFixTrip: true,
-                  ),
-                );
+                if (!_validateForm()) return;
+
+                final request = _buildRequest();
+
+                _navigate(context, ExploreCarsScreen(bookingRequest: request));
               },
               child: const Text(AppTexts.exploreCabs),
             ),
@@ -148,6 +156,7 @@ class _BookingCardState extends State<BookingCard> {
           child: InputField(
             label: AppTexts.toLocation,
             controller: toController,
+
             errorText: toError,
           ),
         ),
@@ -187,12 +196,7 @@ class _BookingCardState extends State<BookingCard> {
           errorText: toError,
         ),
         const SizedBox(height: 16),
-        InputField(
-          label: AppTexts.mobileNumber,
-          controller: mobileController,
-          keyboardType: TextInputType.phone,
-          errorText: mobileError,
-        ),
+        MobileNumberField(controller: mobileController, errorText: mobileError),
       ],
     );
   }

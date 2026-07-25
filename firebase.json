@@ -1,16 +1,1 @@
-{
-  "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
-}
+{"hosting":{"public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]},"flutter":{"platforms":{"android":{"default":{"projectId":"pulsecab-d7886","appId":"1:583746570064:android:f040c15eda76b2e8988e55","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"pulsecab-d7886","appId":"1:583746570064:ios:a67fa77f1047457a988e55","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"pulsecab-d7886","appId":"1:583746570064:ios:a67fa77f1047457a988e55","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"pulsecab-d7886","configurations":{"android":"1:583746570064:android:f040c15eda76b2e8988e55","ios":"1:583746570064:ios:a67fa77f1047457a988e55","macos":"1:583746570064:ios:a67fa77f1047457a988e55","web":"1:583746570064:web:2d81cf6adac56b40988e55","windows":"1:583746570064:web:b4126d6c026d7932988e55"}}}}}}

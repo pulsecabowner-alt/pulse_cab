@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pulse_cab/core/constants/app_colors.dart';
-import 'package:pulse_cab/features/cars/explore_cars_screen.dart';
+import 'package:pulse_cab/core/model/car_model.dart';
 
 class CarCard extends StatelessWidget {
   final CarModel car;
   final bool showPrice;
+  final int? fixedPrice;
   final VoidCallback onChoose;
 
   const CarCard({
     super.key,
     required this.car,
     required this.showPrice,
+    this.fixedPrice,
     required this.onChoose,
   });
 
@@ -29,94 +31,121 @@ class CarCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Expanded(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ================= IMAGE =================
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(22),
-              ),
-              child: Image.network(
-                car.image,
-                height: 180,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// Image
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+            child: Image.network(
+              car.image,
+              height: 180,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                debugPrint('IMAGE ERROR: $error');
 
-            // ================= CONTENT =================
-            Padding(
-              padding: const EdgeInsets.all(18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // 🔹 Car name
-                  Text(
-                    car.name,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                return Container(
+                  height: 180,
+                  color: Colors.grey.shade200,
+                  alignment: Alignment.center,
+                  child: const Icon(Icons.image_not_supported, size: 50),
+                );
+              },
+            ),
+          ),
+
+          /// Content
+          Padding(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  car.name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+
+                const SizedBox(height: 14),
+
+                Row(
+                  children: [
+                    _FeatureIcon(
+                      icon: Icons.event_seat,
+                      label: '${car.seating} Seater',
                     ),
-                  ),
+                    const SizedBox(width: 18),
+                    _FeatureIcon(icon: Icons.settings, label: car.transmission),
+                    const SizedBox(width: 18),
+                    _FeatureIcon(
+                      icon: Icons.local_gas_station,
+                      label: car.fuelType,
+                    ),
+                  ],
+                ),
 
-                  const SizedBox(height: 14),
+                const SizedBox(height: 18),
 
-                  // 🔹 Feature icons row
-                  Row(
-                    children: const [
-                      _FeatureIcon(icon: Icons.event_seat, label: '4 Seater'),
-                      SizedBox(width: 18),
-                      _FeatureIcon(icon: Icons.ac_unit, label: 'AC'),
-                      SizedBox(width: 18),
-                      _FeatureIcon(
-                        icon: Icons.local_gas_station,
-                        label: 'Diesel',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (showPrice)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Fixed Price',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '₹${fixedPrice ?? 0}',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryBlue,
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Starting From',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '₹${car.ratePerKm}/km',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryBlue,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
 
-                  const SizedBox(height: 18),
-
-                  // 🔹 Price + CTA
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (showPrice)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Fixed Price',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '₹${car.price}',
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primaryBlue,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                      _PrimaryButton(title: 'Select Cab', onTap: onChoose),
-                    ],
-                  ),
-                ],
-              ),
+                    _PrimaryButton(title: 'Select Cab', onTap: onChoose),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -187,31 +216,6 @@ class _PrimaryButton extends StatelessWidget {
             fontWeight: FontWeight.w600,
             fontSize: 14,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Badge extends StatelessWidget {
-  final String text;
-
-  const _Badge({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
         ),
       ),
     );

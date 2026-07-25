@@ -31,7 +31,7 @@ class HeroSection extends StatelessWidget {
         ),
 
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // 👈 center content
+          mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Spacer(),
             AppText(

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "583746570064",
+    "project_id": "pulsecab-d7886",
+    "storage_bucket": "pulsecab-d7886.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583746570064:android:39fd2367b7ed14c4988e55",
+        "android_client_info": {
+          "package_name": "com.example.pc_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFH6u1qHnBkKTn4mLFrvKaCOymaFTsS5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583746570064:android:f040c15eda76b2e8988e55",
+        "android_client_info": {
+          "package_name": "com.example.pulse_cab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFH6u1qHnBkKTn4mLFrvKaCOymaFTsS5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,7 +23,7 @@ class InputField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         errorText: errorText,
-        floatingLabelStyle: const TextStyle(color: AppColors.textSecondary),
+        floatingLabelStyle: const TextStyle(color: AppColors.darkBg),
         filled: true,
         fillColor: AppColors.scaffoldBg,
         contentPadding: const EdgeInsets.fromLTRB(16, 16, 44, 16),

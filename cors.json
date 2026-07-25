@@ -1,0 +1,21 @@
+[
+  {
+    "origin": [
+      "http://localhost:5000",
+      "http://localhost:51105",
+      "https://pulsecab.com"
+    ],
+    "method": [
+      "GET",
+      "HEAD",
+      "POST",
+      "PUT",
+      "DELETE"
+    ],
+    "responseHeader": [
+      "Content-Type",
+      "Authorization"
+    ],
+    "maxAgeSeconds": 3600
+  }
+]

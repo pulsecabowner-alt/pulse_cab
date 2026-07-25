@@ -48,17 +48,42 @@ class Navbar extends StatelessWidget {
           Responsive.isMobile(context)
               ? Builder(
                   builder: (context) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.scaffoldBg,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.menu),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
+                    return Row(
+                      children: [
+                        // 📞 Call Button
+                        Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryBlue.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.call,
+                              color: AppColors.primaryBlue,
+                            ),
+                            onPressed: () async {
+                              final uri = Uri.parse('tel:+919999999999');
+                              // ignore: deprecated_member_use
+                              // await launchUrl(uri);
+                            },
+                          ),
+                        ),
+
+                        // ☰ Menu Button
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.scaffoldBg,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(Icons.menu),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          ),
+                        ),
+                      ],
                     );
                   },
                 )
